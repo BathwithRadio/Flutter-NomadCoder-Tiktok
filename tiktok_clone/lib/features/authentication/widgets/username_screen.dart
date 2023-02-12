@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/widgets/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class UsernameScreen extends StatefulWidget {
   const UsernameScreen({super.key});
@@ -17,13 +19,32 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
+    //
+    super.initState(); // state initialize - so this coma first
     _usernameController.addListener(() {
       setState(() {
         _userName = _usernameController.text;
       });
     });
+  }
+
+  // 반드시 dispose 할 것 - 하지 않으면 언젠가 앱이 메모리 부족으로 크래시남
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose(); // after all - clean up - dispose at latest
+  }
+
+  //Stateful widget은 context를 받는 것이 필요 없다.
+  // inside of state, you can receive context when, whereever
+  void _onNextTap() {
+    //
+    if (_userName.isEmpty) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EmailScreen(),
+      ),
+    );
   }
 
   @override
@@ -76,29 +97,13 @@ class _UsernameScreenState extends State<UsernameScreen> {
               cursorColor: Theme.of(context).primaryColor,
             ),
             Gaps.v20,
-            FractionallySizedBox(
-              widthFactor: 1,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size16,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Sizes.size5),
-                  color: _userName.isEmpty
-                      ? Colors.grey.shade400
-                      : Theme.of(context).primaryColor,
-                ),
-                child: const Text(
-                  "Next",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+            GestureDetector(
+              //Stateful widget은 context를 받는 것이 필요 없다.
+              onTap: _onNextTap,
+              child: FormButton(
+                disabled: _userName.isEmpty,
               ),
-            )
+            ),
           ],
         ),
       ),
