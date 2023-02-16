@@ -16,8 +16,19 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   //
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  Map<String, String> formData = {};
+
   void _onSubmitTap() {
-    _formKey.currentState?.validate();
+    // State를 이용해서 입력값을 추적하지 않아도 된다.
+    // 또한 Container, state... 이런 번잡한 것이 필요가 없다
+    if (_formKey.currentState != null) {
+      // 폼에서 유효성 검사
+      if (_formKey.currentState!.validate()) {
+        // 유효성 검사가 된 것을 save -> 이 값이 아래에 onSaved에 콜백 호출
+        _formKey.currentState!.save();
+        print(formData);
+      }
+    }
   }
 
   @override
@@ -40,7 +51,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: 'Email',
                 ),
                 validator: (value) {
-                  return "I don't like your email.";
+                  return null;
+                },
+                onSaved: (newValue) {
+                  if (newValue != null) {
+                    formData['email'] = newValue;
+                  }
                 },
               ),
               Gaps.v16,
@@ -49,15 +65,18 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: 'Password',
                 ),
                 validator: (value) {
-                  return "wrong password";
+                  return null;
+                },
+                onSaved: (newValue) {
+                  if (newValue != null) {
+                    formData['password'] = newValue;
+                  }
                 },
               ),
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmitTap,
-                child: const FormButton(
-                  disabled: false,
-                ),
+                child: const FormButton(disabled: false),
               ), //속성을 더 보내서 Log in 이 나오게 해보면 좋을듯
             ],
           ),
