@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok_clone/features/main_navigation/widgets/post_video_botton.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/stf_screen.dart';
 
 class MainNavigatoinScreen extends StatefulWidget {
@@ -14,61 +16,55 @@ class MainNavigatoinScreen extends StatefulWidget {
 class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
   int _selectedIndex = 0;
 
-  final screens = [
-    StfScreen(
-      key: GlobalKey(),
-    ),
-    StfScreen(
-      key: GlobalKey(),
-    ),
-    // const Center(
-    //   child: Text(
-    //     "home",
-    //     style: TextStyle(fontSize: 49),
-    //   ),
-    // ),
-    // const Center(
-    //   child: Text(
-    //     "Search",
-    //     style: TextStyle(fontSize: 49),
-    //   ),
-    // ),
-    Container(),
-    StfScreen(
-      key: GlobalKey(),
-    ),
-    StfScreen(
-      key: GlobalKey(),
-    ),
-    // const Center(
-    //   child: Text(
-    //     "InBox",
-    //     style: TextStyle(fontSize: 49),
-    //   ),
-    // ),
-    // const Center(
-    //   child: Text(
-    //     "Profile",
-    //     style: TextStyle(fontSize: 49),
-    //   ),
-    // ),
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
+  void _onPostVideoButton() {
+    //
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text("Record Vidoe"),
+          ),
+        ),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens.elementAt(_selectedIndex),
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: const StfScreen(),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
           padding: const EdgeInsets.all(Sizes.size12),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NavTab(
@@ -85,6 +81,12 @@ class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
                 selectedIcon: FontAwesomeIcons.solidCompass,
                 onTap: () => _onTap(1),
               ),
+              Gaps.h24,
+              GestureDetector(
+                onTap: _onPostVideoButton,
+                child: const PostVideoButton(),
+              ),
+              Gaps.h24,
               NavTab(
                 text: "Inbox",
                 isSelected: _selectedIndex == 3,
