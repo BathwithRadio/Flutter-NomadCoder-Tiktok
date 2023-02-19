@@ -37,10 +37,13 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   // inside of state, you can receive context when, whereever
   void _onNextTap() {
     //
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
+      (route) {
+        return false;
+      },
     );
   }
 
