@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 enum Direction { right, left }
 
@@ -39,6 +40,19 @@ class _TutorialScreenState extends State<TutorialScreen> {
         _showingPage = Page.first;
       });
     }
+  }
+
+  void _onEnterAppTap() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const MainNavigatoinScreen(),
+      ),
+      (route) {
+        // predication
+        // route 는 지금까지 표시했던 모든 화면의 경로
+        return false; // 유지할 것이냐 말 것이냐
+      },
+    );
   }
 
   @override
@@ -81,7 +95,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               opacity: _showingPage == Page.first ? 0 : 1,
               duration: const Duration(milliseconds: 300),
               child: CupertinoButton(
-                onPressed: () {},
+                onPressed: _onEnterAppTap,
                 color: Theme.of(context).primaryColor,
                 child: const Text("Enter the app!"),
               ),
