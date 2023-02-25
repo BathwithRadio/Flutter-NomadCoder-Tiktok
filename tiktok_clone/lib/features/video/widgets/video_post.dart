@@ -18,9 +18,16 @@ class VideoPost extends StatefulWidget {
   State<VideoPost> createState() => _VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost> {
+class _VideoPostState extends State<VideoPost>
+    with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/soondol.mp4");
+
+  late final AnimationController _animationController;
+
+  bool _isPaused = false;
+
+  final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
     // 사용자의 영상 길이 == 현재 사용자 영상 상태
@@ -42,6 +49,20 @@ class _VideoPostState extends State<VideoPost> {
   void initState() {
     super.initState();
     _initVideoPlayer();
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 1.0,
+      upperBound: 1.5,
+      value: 1.5, // default
+      duration: _animationDuration,
+    );
+    _animationController.addListener(() {
+      // print(_animationController.value);
+      //-> _animationController는 1.0 1.1 1.2 ... 1.5까지를 호출해내고 있지만
+      // build는 1.5 -> 1.0 일때만 호출되고 있기에 애니메이션이 끊어져서 표현되고 있었음
+      // 여기에 setState를 추가하면 매 변경마다 build를 강제로 호출할 수 있게 됨
+      setState(() {});
+    });
   }
 
   @override
@@ -57,12 +78,19 @@ class _VideoPostState extends State<VideoPost> {
     }
   }
 
+  //1.5 - pause -> 1.0  // 1.0 - play -> 1.5
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _animationController.reverse(); // reverse lowerbound to upperbound
     } else {
       _videoPlayerController.play();
+      _animationController.forward();
     }
+
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   @override
@@ -84,13 +112,20 @@ class _VideoPostState extends State<VideoPost> {
               onTap: _onTogglePause,
             ),
           ),
-          const Positioned.fill(
+          Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.white,
-                  size: Sizes.size56,
+                child: Transform.scale(
+                  scale: _animationController.value,
+                  child: AnimatedOpacity(
+                    duration: _animationDuration,
+                    opacity: _isPaused ? 1 : 0,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size56,
+                    ),
+                  ),
                 ),
               ),
             ),
