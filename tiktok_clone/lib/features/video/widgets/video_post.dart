@@ -121,6 +121,8 @@ class _VideoPostState extends State<VideoPost>
     // 여기 await는 모달을 닫고나면 resolve된다.
     await showModalBottomSheet(
       backgroundColor: Colors.transparent,
+      // Bottomsheet의 화면 크기를 조정하려면 필요
+      isScrollControlled: true,
       context: context,
       builder: (context) => const VideoComments(),
     );

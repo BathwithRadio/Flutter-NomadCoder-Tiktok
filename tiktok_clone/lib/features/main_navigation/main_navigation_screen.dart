@@ -39,6 +39,8 @@ class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 키보드가 켜질 때 화면 찌그러지는 것을 방지
+      resizeToAvoidBottomInset: false,
       backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: Stack(
         children: [
