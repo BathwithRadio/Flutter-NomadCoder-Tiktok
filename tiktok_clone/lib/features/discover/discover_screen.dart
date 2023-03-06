@@ -31,6 +31,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   void _onStopWriting() {
     FocusScope.of(context).unfocus();
     setState(() {
+      // Controller.clear 로 textfield를 비울 수 있다
       _textEditingController.clear();
       _isWriting = false;
     });
@@ -64,7 +65,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     return DefaultTabController(
       length: tabs.length,
       child: Builder(builder: (context) {
-        // defaulte controller setting
+        // default controller setting
         final tabController = DefaultTabController.of(context)!;
         tabController.addListener(() {
           if (tabController.indexIsChanging) {
