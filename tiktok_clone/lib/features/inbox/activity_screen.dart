@@ -69,8 +69,10 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   void _toggleAnimations() async {
     if (_animationController.isCompleted) {
+      // 끌때는 modalbarrier의 애니메이션을 기다리도록
       await _animationController.reverse();
     } else {
+      // 켤때는 modalbarrier가 바로 작동 - await를 걸면 모달창이 다 내려오고나서 배리어가 보임
       _animationController.forward();
     }
     setState(() {
