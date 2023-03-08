@@ -18,9 +18,31 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         title: ListTile(
           contentPadding: EdgeInsets.zero,
           horizontalTitleGap: Sizes.size8,
-          leading: const CircleAvatar(
-            foregroundImage: NetworkImage(""),
-            child: Text("Alsrl"),
+          // stack - Positioned  - border - container - decoration - green
+          leading: Stack(
+            children: [
+              const CircleAvatar(
+                radius: 22,
+                foregroundImage: NetworkImage(""),
+                child: Text("Alsrl"),
+              ),
+              Positioned.fill(
+                left: 26,
+                top: 26,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: Sizes.size3,
+                    ),
+                    color: Colors.green,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           title: const Text("Alsrl",
               style: TextStyle(fontWeight: FontWeight.w600)),
