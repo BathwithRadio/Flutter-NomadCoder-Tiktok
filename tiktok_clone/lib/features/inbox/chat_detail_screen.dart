@@ -11,6 +11,14 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  bool _isWriting = false;
+
+  void _onStartWriting() {
+    setState(() {
+      _isWriting = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,13 +30,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           leading: Stack(
             children: [
               const CircleAvatar(
-                radius: 22,
-                foregroundImage: NetworkImage(""),
+                radius: Sizes.size24,
+                foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/86900125?v=4"),
                 child: Text("Alsrl"),
               ),
               Positioned.fill(
-                left: 26,
-                top: 26,
+                left: 28,
+                top: 28,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -64,6 +73,130 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             ],
           ),
         ),
+      ),
+      body: Stack(
+        children: [
+          ListView.separated(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.size20,
+                horizontal: Sizes.size14,
+              ),
+              itemBuilder: (context, index) {
+                final isMine = index % 2 == 0;
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment:
+                      isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(
+                        Sizes.size14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isMine
+                            ? Colors.blue
+                            : Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(Sizes.size20),
+                          topRight: const Radius.circular(Sizes.size20),
+                          bottomLeft: Radius.circular(
+                              isMine ? Sizes.size20 : Sizes.size5),
+                          bottomRight: Radius.circular(
+                              !isMine ? Sizes.size20 : Sizes.size5),
+                        ),
+                      ),
+                      child: const Text(
+                        "this is a message!!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: Sizes.size16,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              separatorBuilder: (context, index) => Gaps.v10,
+              itemCount: 10),
+          Positioned(
+            bottom: 0,
+            width: MediaQuery.of(context).size.width,
+            child: BottomAppBar(
+              color: Colors.grey.shade200,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        left: Sizes.size16,
+                        top: Sizes.size10,
+                        bottom: Sizes.size10,
+                      ),
+                      child: SizedBox(
+                        height: Sizes.size44,
+                        child: TextField(
+                          onTap: _onStartWriting,
+                          expands: true,
+                          minLines: null,
+                          maxLines: null,
+                          textInputAction: TextInputAction.newline,
+                          decoration: const InputDecoration(
+                            hintText: "Send a message...",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                                bottomLeft: Radius.circular(20.0),
+                              ),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: Sizes.size12,
+                            ),
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: FaIcon(
+                                FontAwesomeIcons.faceLaugh,
+                                color: Colors.black,
+                                size: Sizes.size28,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gaps.h10,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: Sizes.size16,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: Colors.grey.shade400,
+                      ),
+                      // padding: const EdgeInsets.only(
+                      //   right: Sizes.size16,
+                      // ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(Sizes.size8),
+                        child: FaIcon(
+                          FontAwesomeIcons.solidPaperPlane,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
