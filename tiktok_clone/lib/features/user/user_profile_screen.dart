@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -15,104 +17,106 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       // sliver에는 sliver에 맞는 위젯만 넣어야 함
       slivers: [
         SliverAppBar(
-          pinned: true,
-          stretch: true,
-          backgroundColor: Colors.teal,
-          elevation: 1,
-          collapsedHeight: 80,
-          expandedHeight: 200,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const [
-              StretchMode.blurBackground,
-              StretchMode.zoomBackground,
-              StretchMode.fadeTitle,
-            ],
-            background: Image.asset(
-              "assets/images/placeholder.jpg",
-              fit: BoxFit.cover,
+          title: const Text("Alsrl"),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const FaIcon(
+                FontAwesomeIcons.gear,
+                size: Sizes.size20,
+              ),
             ),
-            title: const Text("Hello"),
-          ),
+          ],
         ),
         SliverToBoxAdapter(
           child: Column(
-            children: const [
-              CircleAvatar(
-                backgroundColor: Colors.red,
-                radius: 20,
+            children: [
+              const CircleAvatar(
+                radius: 50,
+                foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/86900125?v=4"),
+                child: Text("Alsrl"),
+              ),
+              Gaps.v20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "@Alsrl",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: Sizes.size18,
+                    ),
+                  ),
+                  Gaps.h5,
+                  FaIcon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    color: Colors.blue.shade500,
+                    size: Sizes.size16,
+                  )
+                ],
+              ),
+              Gaps.v24,
+              SizedBox(
+                height: Sizes.size48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const UserInfo(amount: "197", item: "Following"),
+                    VerticalDivider(
+                      width: Sizes.size60,
+                      thickness: Sizes.size1,
+                      color: Colors.grey.shade400,
+                      indent: Sizes.size14,
+                      endIndent: Sizes.size14,
+                    ),
+                    const UserInfo(amount: "10.5M", item: "Followers"),
+                    VerticalDivider(
+                      width: Sizes.size60,
+                      thickness: Sizes.size1,
+                      color: Colors.grey.shade400,
+                      indent: Sizes.size14,
+                      endIndent: Sizes.size14,
+                    ),
+                    const UserInfo(amount: "194.4M", item: "Likes"),
+                  ],
+                ),
               ),
             ],
           ),
-        ),
-        SliverFixedExtentList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 50,
-            (context, index) => Container(
-              color: Colors.blueGrey[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Item $index"),
-              ),
-            ),
-          ),
-          itemExtent: 100,
-        ),
-        SliverPersistentHeader(
-          delegate: CustomDelegate(),
-          pinned: true,
-        ),
-        SliverGrid(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 50,
-            (context, index) => Container(
-              color: Colors.blue[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Item $index"),
-              ),
-            ),
-          ),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 100,
-            mainAxisSpacing: Sizes.size20,
-            crossAxisSpacing: Sizes.size20,
-            childAspectRatio: 1,
-          ),
-        ),
+        )
       ],
     );
   }
 }
 
-class CustomDelegate extends SliverPersistentHeaderDelegate {
+class UserInfo extends StatelessWidget {
+  const UserInfo({
+    Key? key,
+    required this.amount,
+    required this.item,
+  }) : super(key: key);
+
+  final String amount;
+  final String item;
+
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.indigo,
-      // FractionallySizedBox - takes as much as space possible from parents
-      child: const FractionallySizedBox(
-        heightFactor: 1, // take all
-        child: Center(
-          child: Text(
-            "Title!!",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          amount,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: Sizes.size18,
           ),
         ),
-      ),
+        Gaps.v3,
+        Text(
+          item,
+          style: TextStyle(color: Colors.grey.shade500),
+        ),
+      ],
     );
-  }
-
-  @override
-  double get maxExtent => 150;
-
-  @override
-  double get minExtent => 80;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }
