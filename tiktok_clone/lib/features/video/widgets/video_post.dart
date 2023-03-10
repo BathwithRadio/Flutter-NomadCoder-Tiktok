@@ -80,6 +80,12 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChange(VisibilityInfo info) {
     //
+    // 한번 비디오를 정지하고 다른 화면으로 넘기고 자동 재생되기 전에 바로 다시 호출하면
+    // 이미 dispose 된 상태에서 다시 호출하는 것이기 때문에 에러가 발생한다.
+    // 그래서 mount를 호출함
+    // mount - widget이 mount되었는지 아닌지 알려줌
+    // mount되지 않으면 보여주지 않도록 하는것
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
