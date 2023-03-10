@@ -207,14 +207,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Icon(
                           Icons.play_arrow_outlined,
                           color: Colors.white,
-                          size: Sizes.size28,
+                          size: Sizes.size20,
                         ),
                         Gaps.h3,
                         Text(
                           "4.1M",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: Sizes.size18,
+                            fontSize: Sizes.size14,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
