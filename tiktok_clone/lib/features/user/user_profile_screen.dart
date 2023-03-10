@@ -86,25 +86,76 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   Gaps.v14,
                   FractionallySizedBox(
-                    widthFactor: 0.33,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Sizes.size12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(Sizes.size4),
+                    widthFactor: 0.80,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size72,
+                            vertical: Sizes.size18,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size4),
+                            ),
+                          ),
+                          child: const Text(
+                            "Follow",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Follow",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                        Gaps.h5,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size14,
+                            vertical: Sizes.size12,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.shade300,
+                            ),
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                Sizes.size4,
+                              ),
+                            ),
+                          ),
+                          child: const FaIcon(
+                            FontAwesomeIcons.youtube,
+                            size: Sizes.size28,
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
+                        Gaps.h5,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size12,
+                            vertical: Sizes.size10,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.shade300,
+                            ),
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                Sizes.size4,
+                              ),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_drop_down,
+                            size: Sizes.size32,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Gaps.v14,
