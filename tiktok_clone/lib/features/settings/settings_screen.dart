@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -25,6 +26,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
+          Switch.adaptive(
+              value: _notifications, onChanged: _onNotificationsChanged),
+          CupertinoSwitch(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+          ),
+          SwitchListTile.adaptive(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+            title: const Text("Enable notifications"),
+            subtitle: const Text("Enable notifications subtitle"),
+          ),
+          SwitchListTile(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+            title: const Text("Enable notifications"),
+          ),
           CheckboxListTile(
             activeColor: Colors.black,
             value: _notifications,
