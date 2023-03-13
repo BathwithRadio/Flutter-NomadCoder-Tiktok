@@ -29,7 +29,13 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        print(orientation);
+        // if (orientation == Orientation.landscape) {
+        //   return const Scaffold(
+        //     body: Center(
+        //       child: Text("Please rotate your phone"),
+        //     ),
+        //   );
+        // }
         return Scaffold(
           //SafeArea : make every thing inside of it render where not covered
           // like status bar on phone
