@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoint.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -19,8 +20,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  TextAlign _setTextAlignByScreen(double width) {
+    return width > Breakpoints.sm ? TextAlign.center : TextAlign.start;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -30,14 +36,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SwitchListTile.adaptive(
             value: _notifications,
             onChanged: _onNotificationsChanged,
-            title: const Text("Enable notifications"),
-            subtitle: const Text("Enable notifications subtitle"),
+            title: Text(
+              "Enable notifications",
+              textAlign: _setTextAlignByScreen(width),
+            ),
+            subtitle: Text(
+              "Enable notifications subtitle",
+              textAlign: _setTextAlignByScreen(width),
+            ),
           ),
           CheckboxListTile(
             activeColor: Colors.black,
             value: _notifications,
             onChanged: _onNotificationsChanged,
-            title: const Text("Enable notifications"),
+            title: Text(
+              "Enable notifications",
+              textAlign: _setTextAlignByScreen(width),
+            ),
           ),
           ListTile(
             onTap: () async {
@@ -47,12 +62,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 firstDate: DateTime(1980),
                 lastDate: DateTime(2030),
               );
-              print(date);
+
               final time = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
-              print(time);
+
               final booking = await showDateRangePicker(
                 context: context,
                 firstDate: DateTime(1980),
@@ -69,13 +84,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 },
               );
-              print(booking);
             },
-            title: const Text("What is your birthday?"),
+            title: Text(
+              "What is your birthday?",
+              textAlign: _setTextAlignByScreen(width),
+            ),
           ),
           const AboutListTile(),
           ListTile(
-            title: const Text("Logout (iOS)"),
+            title: Text(
+              "Logout (iOS)",
+              textAlign: _setTextAlignByScreen(width),
+            ),
             textColor: Colors.red,
             onTap: () => showCupertinoDialog(
               context: context,
@@ -99,7 +119,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           ListTile(
-            title: const Text("Logout (Android)"),
+            title: Text(
+              "Logout (Android)",
+              textAlign: _setTextAlignByScreen(width),
+            ),
             textColor: Colors.red,
             onTap: () => showCupertinoDialog(
               context: context,
@@ -123,7 +146,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           ListTile(
-            title: const Text("Logout (iOS / Bottom)"),
+            title: Text(
+              "Logout (iOS / Bottom)",
+              textAlign: _setTextAlignByScreen(width),
+            ),
             textColor: Colors.red,
             onTap: () {
               showCupertinoModalPopup(

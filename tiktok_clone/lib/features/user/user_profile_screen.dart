@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
@@ -23,6 +24,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -99,6 +102,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     FractionallySizedBox(
                       widthFactor: 0.80,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -215,9 +219,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 itemCount: 20,
                 padding: EdgeInsets.zero,
                 // help you configure grid view
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   // how many colums you have
-                  crossAxisCount: 3,
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 3,
                   crossAxisSpacing: Sizes.size2,
                   mainAxisSpacing: Sizes.size2,
                   childAspectRatio: 9 / 14,

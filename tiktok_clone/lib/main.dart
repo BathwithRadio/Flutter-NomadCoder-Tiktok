@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/discover/discover_screen.dart';
+import 'package:tiktok_clone/features/settings/settings_screen.dart';
 
 void main() async {
 /**
@@ -53,7 +53,7 @@ class TikTokApp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             )),
       ),
-      home: const DiscoverScreen(),
+      home: const SettingsScreen(),
     );
   }
 }
