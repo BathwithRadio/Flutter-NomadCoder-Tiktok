@@ -6,7 +6,6 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // TODO: implement build
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

@@ -81,85 +81,90 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
               elevation: 1,
-              title: Row(
-                children: [
-                  GestureDetector(
-                    onTap: _onBackToMain,
-                    child: const FaIcon(
-                      FontAwesomeIcons.angleLeft,
-                      color: Colors.black,
+              title: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: Breakpoints.sm,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: _onBackToMain,
+                      child: const FaIcon(
+                        FontAwesomeIcons.angleLeft,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  Gaps.h10,
-                  Expanded(
-                    child: SizedBox(
-                      // 텍스트 박스 높이 변경은 이런방식밖에 지원되지 않는다.
-                      height: Sizes.size44,
-                      child: TextField(
-                        controller: _textEditingController,
-                        onTap: _onStartWriting,
-                        expands: true,
-                        minLines: null,
-                        maxLines: null,
-                        textInputAction: TextInputAction.newline,
-                        cursorColor: Theme.of(context).primaryColor,
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                              left: Sizes.size14,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                FaIcon(
-                                  FontAwesomeIcons.magnifyingGlass,
-                                  size: Sizes.size20,
-                                  color: Colors.grey.shade700,
-                                ),
-                              ],
-                            ),
-                          ),
-                          hintText: "Search",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              Sizes.size12,
-                            ),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: Sizes.size12,
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                              right: Sizes.size14,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (_isWriting)
-                                  GestureDetector(
-                                    onTap: _onStopWriting,
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidCircleXmark,
-                                      color: Colors.grey.shade600,
-                                    ),
+                    Gaps.h10,
+                    Expanded(
+                      child: SizedBox(
+                        // 텍스트 박스 높이 변경은 이런방식밖에 지원되지 않는다.
+                        height: Sizes.size44,
+                        child: TextField(
+                          controller: _textEditingController,
+                          onTap: _onStartWriting,
+                          expands: true,
+                          minLines: null,
+                          maxLines: null,
+                          textInputAction: TextInputAction.newline,
+                          cursorColor: Theme.of(context).primaryColor,
+                          decoration: InputDecoration(
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(
+                                left: Sizes.size14,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.magnifyingGlass,
+                                    size: Sizes.size20,
+                                    color: Colors.grey.shade700,
                                   ),
-                                Gaps.h8,
-                              ],
+                                ],
+                              ),
+                            ),
+                            hintText: "Search",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                Sizes.size12,
+                              ),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade200,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: Sizes.size12,
+                            ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.only(
+                                right: Sizes.size14,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_isWriting)
+                                    GestureDetector(
+                                      onTap: _onStopWriting,
+                                      child: FaIcon(
+                                        FontAwesomeIcons.solidCircleXmark,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  Gaps.h8,
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Gaps.h10,
-                  FaIcon(
-                    FontAwesomeIcons.server,
-                    color: Colors.grey.shade900,
-                  ),
-                ],
+                    Gaps.h10,
+                    FaIcon(
+                      FontAwesomeIcons.server,
+                      color: Colors.grey.shade900,
+                    ),
+                  ],
+                ),
               ),
               bottom: TabBar(
                 splashFactory: NoSplash.splashFactory,
