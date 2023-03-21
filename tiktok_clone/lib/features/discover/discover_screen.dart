@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = ['Top', 'Users', 'Videos', 'Sounds', 'LIVE', 'Shopping', 'Brands'];
 
@@ -70,7 +71,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       child: Builder(
         builder: (context) {
           // default controller setting
-          final tabController = DefaultTabController.of(context)!;
+          final tabController = DefaultTabController.of(context);
           tabController.addListener(() {
             if (tabController.indexIsChanging) {
               FocusScope.of(context).unfocus();
@@ -131,7 +132,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                               borderSide: BorderSide.none,
                             ),
                             filled: true,
-                            fillColor: Colors.grey.shade200,
+                            fillColor: isDarkMode(context)
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: Sizes.size12,
                             ),
@@ -176,8 +179,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   fontWeight: FontWeight.w600,
                   fontSize: Sizes.size16,
                 ),
-                indicatorColor: Colors.black,
-                labelColor: Colors.black,
+                indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
                 unselectedLabelColor: Colors.grey.shade500,
                 tabs: [
                   for (var tab in tabs)
@@ -228,48 +230,50 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                           ),
                         ),
                         Gaps.v10,
-                        Text(
-                          "${constraint.maxWidth}This is a very long caption for my ticktok so I'm uploading no currently.",
+                        const Text(
+                          "This is a very long caption for my ticktok so I'm uploading no currently.",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: Sizes.size16 + Sizes.size2,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Gaps.v8,
-                        if (constraint.maxWidth < 200 ||
-                            constraint.maxWidth > 250)
-                          DefaultTextStyle(
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            child: Row(
-                              children: [
-                                const CircleAvatar(
-                                  radius: 12,
-                                  backgroundImage: NetworkImage(
-                                      "https://avatars.githubusercontent.com/u/86900125?v=4"),
+                        // if (constraint.maxWidth < 200 ||
+                        //     constraint.maxWidth > 250)
+                        DefaultTextStyle(
+                          style: TextStyle(
+                            color: isDarkMode(context)
+                                ? Colors.grey.shade300
+                                : Colors.grey.shade600,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 12,
+                                backgroundImage: NetworkImage(
+                                    "https://avatars.githubusercontent.com/u/86900125?v=4"),
+                              ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  "My avatar is gonna be very long!!",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Gaps.h4,
-                                const Expanded(
-                                  child: Text(
-                                    "My avatar is gonna be very long!!",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.heart,
-                                  size: Sizes.size16,
-                                  color: Colors.grey.shade600,
-                                ),
-                                Gaps.h2,
-                                const Text("2.5M")
-                              ],
-                            ),
-                          )
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size16,
+                                color: Colors.grey.shade600,
+                              ),
+                              Gaps.h2,
+                              const Text("2.5M")
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
