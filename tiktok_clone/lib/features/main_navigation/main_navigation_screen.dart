@@ -8,6 +8,7 @@ import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_botton.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/video_timeline_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class MainNavigatoinScreen extends StatefulWidget {
   const MainNavigatoinScreen({super.key});
@@ -41,6 +42,7 @@ class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Scaffold(
       // 키보드가 켜질 때 화면 찌그러지는 것을 방지
       resizeToAvoidBottomInset: false,
@@ -66,7 +68,7 @@ class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(Sizes.size12),
           child: Row(
