@@ -46,7 +46,8 @@ class _MainNavigatoinScreenState extends State<MainNavigatoinScreen> {
     return Scaffold(
       // 키보드가 켜질 때 화면 찌그러지는 것을 방지
       resizeToAvoidBottomInset: false,
-      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+      backgroundColor:
+          _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
