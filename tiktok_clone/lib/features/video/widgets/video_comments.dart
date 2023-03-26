@@ -127,11 +127,14 @@ class _VideoCommentsState extends State<VideoComments> {
                 bottom: 0,
                 // MediaQuery 사용자 화면의 정보를 요청하는 것
                 width: size.width,
-                child: BottomAppBar(
+                child: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size16,
-                      vertical: Sizes.size10,
+                    padding: const EdgeInsets.only(
+                      top: Sizes.size10,
+                      bottom: Sizes.size36,
+                      right: Sizes.size16,
+                      left: Sizes.size16,
                     ),
                     child: Row(
                       children: [
