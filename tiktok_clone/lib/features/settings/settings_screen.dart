@@ -27,155 +27,160 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
-      body: ListView(
-        children: [
-          SwitchListTile.adaptive(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
-            title: Text(
-              "Enable notifications",
-              textAlign: _setTextAlignByScreen(width),
+    return Localizations.override(
+      context: context,
+      locale: const Locale("es"), // how to set locallization
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Settings"),
+        ),
+        body: ListView(
+          children: [
+            SwitchListTile.adaptive(
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+              title: Text(
+                "Enable notifications",
+                textAlign: _setTextAlignByScreen(width),
+              ),
+              subtitle: Text(
+                "Enable notifications subtitle",
+                textAlign: _setTextAlignByScreen(width),
+              ),
             ),
-            subtitle: Text(
-              "Enable notifications subtitle",
-              textAlign: _setTextAlignByScreen(width),
+            CheckboxListTile(
+              activeColor: Colors.black,
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+              title: Text(
+                "Enable notifications",
+                textAlign: _setTextAlignByScreen(width),
+              ),
             ),
-          ),
-          CheckboxListTile(
-            activeColor: Colors.black,
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
-            title: Text(
-              "Enable notifications",
-              textAlign: _setTextAlignByScreen(width),
-            ),
-          ),
-          ListTile(
-            onTap: () async {
-              final date = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1980),
-                lastDate: DateTime(2030),
-              );
-
-              final time = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-
-              final booking = await showDateRangePicker(
-                context: context,
-                firstDate: DateTime(1980),
-                lastDate: DateTime(2030),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData(
-                      appBarTheme: const AppBarTheme(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.black,
+            ListTile(
+              onTap: () async {
+                if (!mounted) return;
+                final date = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1980),
+                  lastDate: DateTime(2030),
+                );
+                if (!mounted) return;
+                final time = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                if (!mounted) return;
+                final booking = await showDateRangePicker(
+                  context: context,
+                  firstDate: DateTime(1980),
+                  lastDate: DateTime(2030),
+                  builder: (context, child) {
+                    return Theme(
+                      data: ThemeData(
+                        appBarTheme: const AppBarTheme(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black,
+                        ),
                       ),
-                    ),
-                    child: child!,
-                  );
-                },
-              );
-            },
-            title: Text(
-              "What is your birthday?",
-              textAlign: _setTextAlignByScreen(width),
-            ),
-          ),
-          const AboutListTile(),
-          ListTile(
-            title: Text(
-              "Logout (iOS)",
-              textAlign: _setTextAlignByScreen(width),
-            ),
-            textColor: Colors.red,
-            onTap: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => CupertinoAlertDialog(
-                title: const Text("Are you sure?"),
-                content: const Text("Please don't go"),
-                actions: [
-                  CupertinoDialogAction(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("No"),
-                  ),
-                  CupertinoDialogAction(
-                    onPressed: () => Navigator.of(context).pop(),
-                    isDestructiveAction: true,
-                    child: const Text(
-                      "Yes",
-                    ),
-                  ),
-                ],
+                      child: child!,
+                    );
+                  },
+                );
+              },
+              title: Text(
+                "What is your birthday?",
+                textAlign: _setTextAlignByScreen(width),
               ),
             ),
-          ),
-          ListTile(
-            title: Text(
-              "Logout (Android)",
-              textAlign: _setTextAlignByScreen(width),
-            ),
-            textColor: Colors.red,
-            onTap: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                icon: const FaIcon(FontAwesomeIcons.skull),
-                title: const Text("Are you sure?"),
-                content: const Text("Please don't go"),
-                actions: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const FaIcon(FontAwesomeIcons.whatsapp),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text(
-                      "Yes",
-                    ),
-                  ),
-                ],
+            const AboutListTile(),
+            ListTile(
+              title: Text(
+                "Logout (iOS)",
+                textAlign: _setTextAlignByScreen(width),
               ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Logout (iOS / Bottom)",
-              textAlign: _setTextAlignByScreen(width),
-            ),
-            textColor: Colors.red,
-            onTap: () {
-              showCupertinoModalPopup(
+              textColor: Colors.red,
+              onTap: () => showCupertinoDialog(
                 context: context,
-                builder: (context) => CupertinoActionSheet(
+                builder: (context) => CupertinoAlertDialog(
                   title: const Text("Are you sure?"),
-                  message: const Text("Plese don't gooooooo"),
+                  content: const Text("Please don't go"),
                   actions: [
-                    CupertinoActionSheetAction(
-                      isDefaultAction: true,
+                    CupertinoDialogAction(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("Not log out"),
+                      child: const Text("No"),
                     ),
-                    CupertinoActionSheetAction(
+                    CupertinoDialogAction(
                       onPressed: () => Navigator.of(context).pop(),
                       isDestructiveAction: true,
                       child: const Text(
-                        "Yes plz",
+                        "Yes",
                       ),
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "Logout (Android)",
+                textAlign: _setTextAlignByScreen(width),
+              ),
+              textColor: Colors.red,
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  icon: const FaIcon(FontAwesomeIcons.skull),
+                  title: const Text("Are you sure?"),
+                  content: const Text("Please don't go"),
+                  actions: [
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const FaIcon(FontAwesomeIcons.whatsapp),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text(
+                        "Yes",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "Logout (iOS / Bottom)",
+                textAlign: _setTextAlignByScreen(width),
+              ),
+              textColor: Colors.red,
+              onTap: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) => CupertinoActionSheet(
+                    title: const Text("Are you sure?"),
+                    message: const Text("Plese don't gooooooo"),
+                    actions: [
+                      CupertinoActionSheetAction(
+                        isDefaultAction: true,
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Not log out"),
+                      ),
+                      CupertinoActionSheetAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        isDestructiveAction: true,
+                        child: const Text(
+                          "Yes plz",
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
