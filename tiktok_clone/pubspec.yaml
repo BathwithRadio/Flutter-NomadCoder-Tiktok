@@ -32,6 +32,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations: 
+    sdk: flutter
+  intl: any
+
   font_awesome_flutter: 10.3.0
 
   video_player: 2.4.10
