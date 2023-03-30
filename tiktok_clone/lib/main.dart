@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
-import 'package:flutter_gen/gen_l10n/intl_generated.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 void main() async {
 /**
- * Flutter Framework를 이용해 앱이 시작하기 전에 state를 어떤식으로든 바꾸고 싶다면
+ * Flutter Framework를 이용해 앱이 시작하기 전에 stat e를 어떤식으로든 바꾸고 싶다면
  * engine자체와 engine과 widget의 연결을 확실하기 초기화 시켜야한다.
  */
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +34,16 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ko'),
+      ],
       themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,

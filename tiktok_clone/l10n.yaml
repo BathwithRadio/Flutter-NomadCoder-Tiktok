@@ -1,6 +1,0 @@
-# 생성된 코드(번역 파일)는 어디에 저장되어야 하는지
-arb-dir: lib/intl
-# 위의 파일에 마스터 파일 - 기본 언어가 들어있는 파일이 무엇인지 알려주어야
-template-arb-file: intl_en.arb
-# 번역본 파일이 어떤 곳에 생성되어야 하는지
-output-localization-file: intl_generated.dart
