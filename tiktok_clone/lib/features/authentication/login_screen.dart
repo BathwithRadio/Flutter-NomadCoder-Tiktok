@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
+import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_botton.dart';
 import 'package:tiktok_clone/utils.dart';
 
@@ -17,11 +17,31 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginFormScreen(),
-        ));
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        reverseTransitionDuration: const Duration(seconds: 1),
+        transitionDuration: const Duration(seconds: 1),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const UsernameScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final offsetAnimation = Tween(
+            begin: const Offset(0, -1),
+            end: Offset.zero,
+          ).animate(animation);
+          final opacityAnimation = Tween(
+            begin: 0.5,
+            end: 1.0,
+          ).animate(animation);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: FadeTransition(
+              opacity: opacityAnimation,
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override

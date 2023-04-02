@@ -11,16 +11,15 @@ import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).push(
+  void _onLoginTap(BuildContext context) {
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
-    print("User Cameback!");
   }
 
-  void _onUsernameTap(BuildContext context) {
+  void _onEmailLoginTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const UsernameScreen(),
@@ -72,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                   Gaps.v40,
                   if (orientation == Orientation.portrait) ...[
                     GestureDetector(
-                      onTap: () => _onUsernameTap(context),
+                      onTap: () => _onEmailLoginTap(context),
                       child: const AuthBotton(
                         icon: FaIcon(FontAwesomeIcons.user),
                         text: "Use email & password",
@@ -89,7 +88,7 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => _onUsernameTap(context),
+                            onTap: () => _onEmailLoginTap(context),
                             child: const AuthBotton(
                               icon: FaIcon(FontAwesomeIcons.user),
                               text: "Use email & password",
