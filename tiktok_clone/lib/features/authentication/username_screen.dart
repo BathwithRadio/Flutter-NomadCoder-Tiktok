@@ -5,6 +5,7 @@ import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class UsernameScreen extends StatefulWidget {
+  static String routeName = "/username";
   const UsernameScreen({super.key});
 
   @override
@@ -21,11 +22,15 @@ class _UsernameScreenState extends State<UsernameScreen> {
   void initState() {
     //
     super.initState(); // state initialize - so this coma first
-    _usernameController.addListener(() {
-      setState(() {
-        _userName = _usernameController.text;
-      });
-    });
+    _usernameController.addListener(
+      () {
+        setState(
+          () {
+            _userName = _usernameController.text;
+          },
+        );
+      },
+    );
   }
 
   // 반드시 dispose 할 것 - 하지 않으면 언젠가 앱이 메모리 부족으로 크래시남
@@ -40,10 +45,10 @@ class _UsernameScreenState extends State<UsernameScreen> {
   void _onNextTap() {
     //
     if (_userName.isEmpty) return;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
-      ),
+    Navigator.pushNamed(
+      context,
+      EmailScreen.routeName,
+      arguments: EmailScreenArgs(username: _userName),
     );
   }
 
