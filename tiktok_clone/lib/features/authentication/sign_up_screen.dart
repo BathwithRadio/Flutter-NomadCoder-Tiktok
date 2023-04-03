@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
@@ -13,8 +14,10 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    print(result);
+    // go : 사용자를 다른 화면으로 보내는데 stack은 무시하고 보냄
+    // -> back botton이 없어지게 됨
+    // -> go로 이동한 후 로그인 스크린에서 siginin으로 pop이 불가능해짐
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailLoginTap(BuildContext context) {
@@ -43,12 +46,11 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(Localizations.localeOf(context));
     return OrientationBuilder(
       builder: (context, orientation) {
         // if (orientation == Orientation.landscape) {

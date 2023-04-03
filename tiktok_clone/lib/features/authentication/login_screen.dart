@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
@@ -14,7 +15,7 @@ class LoginScreen extends StatelessWidget {
     // sign up 에서 사용한 push를 여기서도 사용하면
     // Login Signup간 무한뒤로가기가 되어버림
     // 그렇기 때문에 pop으로 설정한다.
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {
