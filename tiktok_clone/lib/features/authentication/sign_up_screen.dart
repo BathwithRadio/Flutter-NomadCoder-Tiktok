@@ -16,6 +16,7 @@ class SignUpScreen extends StatelessWidget {
   void _onLoginTap(BuildContext context) async {
     // go : 사용자를 다른 화면으로 보내는데 stack은 무시하고 보냄
     // -> back botton이 없어지게 됨
+    // -> go로 이동한 후 로그인 스크린에서 siginin으로 pop이 불가능해짐
     context.push(LoginScreen.routeName);
   }
 
