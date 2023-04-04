@@ -10,7 +10,8 @@ import 'package:tiktok_clone/utils.dart';
 import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeURL = "/";
+  static String routeName = "signUp";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -46,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
