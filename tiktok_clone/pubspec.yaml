@@ -50,7 +50,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
-  camera: ^0.10.3+2
+  camera: ^0.10.4
 
   permission_handler: ^10.2.0
   
