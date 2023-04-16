@@ -39,6 +39,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   bool _hasPermission = false;
   bool _permissionDenied = false;
   bool _isSelfieMode = false;
+
   bool _prepareDispose = false;
 
   late FlashMode _flashMode;
@@ -81,7 +82,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _flashMode = _cameraController.value.flashMode;
 
     setState(() {});
-  }
+
 
   Future<void> initPermissions() async {
     final cameraPermission = await Permission.camera.request();
@@ -226,6 +227,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
+  Future<void> _toggleSelfieMode() async {
+    _isSelfieMode = !_isSelfieMode;
+    await initCamera();
+    setState(() {});
+  }
+
+  Future<void> _setFlashMode(FlashMode newFlashMode) async {
+    await _cameraController.setFlashMode(newFlashMode);
+    _flashMode = newFlashMode;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,6 +257,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                         CameraPreview(
                           _cameraController,
                         ),
+
                       Positioned(
                         top: Sizes.size40,
                         right: Sizes.size20,
