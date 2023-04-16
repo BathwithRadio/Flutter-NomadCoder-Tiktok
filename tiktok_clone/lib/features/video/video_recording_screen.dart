@@ -35,10 +35,11 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _permissionDenied = false;
   bool _isSelfieMode = false;
+  bool _prepareDispose = false;
 
   late FlashMode _flashMode;
   late CameraController _cameraController;
@@ -78,6 +79,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.prepareForVideoRecording();
 
     _flashMode = _cameraController.value.flashMode;
+
+    setState(() {});
   }
 
   Future<void> initPermissions() async {
@@ -103,6 +106,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void initState() {
     super.initState();
     initPermissions();
+    WidgetsBinding.instance.addObserver(this);
     // animation의 value가 바뀐 것을 알려줌 0.1, 0.2....
     _progressAnimationController.addListener(() {
       setState(() {});
@@ -168,6 +172,20 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!_hasPermission) return;
+    if (!_cameraController.value.isInitialized) return;
+
+    if (state == AppLifecycleState.paused) {
+      _prepareDispose = true;
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      _prepareDispose = false;
+      initCamera();
+    }
+  }
+
   Future<void> _onPickVideoPressed() async {
     final video = await ImagePicker().pickVideo(
       // source: ImageSource.camera,
@@ -204,7 +222,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                 : Stack(
                     alignment: Alignment.center,
                     children: [
-                      CameraPreview(_cameraController),
+                      if (!_prepareDispose)
+                        CameraPreview(
+                          _cameraController,
+                        ),
                       Positioned(
                         top: Sizes.size40,
                         right: Sizes.size20,
