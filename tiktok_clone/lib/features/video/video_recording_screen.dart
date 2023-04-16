@@ -208,6 +208,24 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
   }
 
+  Future<void> _zooming(DragUpdateDetails dragUpdate) async {
+    // if (!_cameraController.value.isRecordingVideo) return;
+
+    // print(dragUpdate.localPosition.dy * 0.1);
+    // print(await _cameraController.getMaxZoomLevel());
+    double minZoomlevel = await _cameraController.getMinZoomLevel();
+    double maxZoomlevel = await _cameraController.getMaxZoomLevel();
+    double zoomlevel = minZoomlevel + dragUpdate.localPosition.dy * -0.1;
+
+    if (zoomlevel < minZoomlevel || zoomlevel > maxZoomlevel) {
+      return;
+    } else {
+      _cameraController.setZoomLevel(zoomlevel);
+    }
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,6 +283,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                             GestureDetector(
                               onTapDown: _startRecording,
                               onTapUp: (details) => _stopRecording(),
+                              onPanUpdate: _zooming,
                               child: ScaleTransition(
                                 scale: _buttonAnimation,
                                 child: Stack(
@@ -274,7 +293,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                                       width: Sizes.size80 + Sizes.size14,
                                       height: Sizes.size80 + Sizes.size14,
                                       child: CircularProgressIndicator(
-                                        color: Colors.red.shade400,
+                                        color: Colors.white,
                                         strokeWidth: Sizes.size6,
                                         value:
                                             _progressAnimationController.value,
