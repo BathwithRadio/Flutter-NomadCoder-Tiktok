@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/video/video_preview_screen.dart';
 import 'package:tiktok_clone/features/video/widgets/video_flash_control.dart';
 
 final List<dynamic> flashButtons = [
@@ -70,6 +71,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     await _cameraController.initialize();
 
+    // only for iOS
+    // 가끔 iOS로 녹화를 하면 비디오와 영샹의 싱크가 맞지 않는데 그것을 해결하는 기능
+    await _cameraController.prepareForVideoRecording();
+
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -120,14 +125,40 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _startRecording(TapDownDetails _) {
+  Future<void> _startRecording(TapDownDetails _) async {
+    //이미 녹화중인지 확인
+    if (_cameraController.value.isRecordingVideo) return;
+
+    await _cameraController.startVideoRecording();
+
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    // 녹화 중지 전 확인 - 녹화중인데 녹화를 중지하면 안되니까
+    if (!_cameraController.value.isRecordingVideo) return;
+
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final video = await _cameraController.stopVideoRecording();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(video: video),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    // Video Preview로 이동한 후에 이 화면에서 사용한 리소스를 계속 사용하고 싶지 않으므로
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
   }
 
   @override
