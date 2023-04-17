@@ -18,36 +18,16 @@ class SignUpScreen extends StatelessWidget {
     // go : 사용자를 다른 화면으로 보내는데 stack은 무시하고 보냄
     // -> back botton이 없어지게 됨
     // -> go로 이동한 후 로그인 스크린에서 siginin으로 pop이 불가능해짐
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    // Navigator.of(context).push(
-    //   PageRouteBuilder(
-    //     reverseTransitionDuration: const Duration(seconds: 1),
-    //     transitionDuration: const Duration(seconds: 1),
-    //     pageBuilder: (context, animation, secondaryAnimation) =>
-    //         const UsernameScreen(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //       final offsetAnimation = Tween(
-    //         begin: const Offset(0, -1),
-    //         end: Offset.zero,
-    //       ).animate(animation);
-    //       final opacityAnimation = Tween(
-    //         begin: 0.5,
-    //         end: 1.0,
-    //       ).animate(animation);
-    //       return SlideTransition(
-    //         position: offsetAnimation,
-    //         child: FadeTransition(
-    //           opacity: opacityAnimation,
-    //           child: child,
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
   }
 
   @override

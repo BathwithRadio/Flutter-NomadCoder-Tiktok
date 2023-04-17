@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,8 +42,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   bool _hasPermission = false;
   bool _permissionDenied = false;
   bool _isSelfieMode = false;
-
   bool _prepareDispose = false;
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
 
   late FlashMode _flashMode;
   late CameraController _cameraController;
@@ -82,7 +85,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _flashMode = _cameraController.value.flashMode;
 
     setState(() {});
-
+  }
 
   Future<void> initPermissions() async {
     final cameraPermission = await Permission.camera.request();
@@ -106,7 +109,11 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   @override
   void initState() {
     super.initState();
-    initPermissions();
+    if (!_noCamera) {
+      initPermissions();
+    } else {
+      _hasPermission = true;
+    }
     WidgetsBinding.instance.addObserver(this);
     // animation의 value가 바뀐 것을 알려줌 0.1, 0.2....
     _progressAnimationController.addListener(() {
@@ -227,18 +234,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  Future<void> _toggleSelfieMode() async {
-    _isSelfieMode = !_isSelfieMode;
-    await initCamera();
-    setState(() {});
-  }
-
-  Future<void> _setFlashMode(FlashMode newFlashMode) async {
-    await _cameraController.setFlashMode(newFlashMode);
-    _flashMode = newFlashMode;
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -248,44 +243,43 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         child: _permissionDenied
             ? const CameraStatus(
                 status: "Permission Denied\n Setting > App > Turn on Camera")
-            : !_hasPermission || !_cameraController.value.isInitialized
+            : !_hasPermission
                 ? const CameraStatus(status: "Initializing.....")
                 : Stack(
                     alignment: Alignment.center,
                     children: [
-                      if (!_prepareDispose)
-                        CameraPreview(
-                          _cameraController,
-                        ),
-
-                      Positioned(
-                        top: Sizes.size40,
-                        right: Sizes.size20,
-                        child: Column(
-                          children: [
-                            IconButton(
-                              color: Colors.white,
-                              onPressed: _toggleSelfieMode,
-                              icon: const Icon(
-                                Icons.cameraswitch,
+                      if (!_noCamera && _cameraController.value.isInitialized)
+                        if (!_prepareDispose) CameraPreview(_cameraController),
+                      // FlashMode는 late 이기 때문에 초기화 하지 않으면 안됨 => 숨겨줌
+                      if (!_noCamera)
+                        Positioned(
+                          top: Sizes.size40,
+                          right: Sizes.size20,
+                          child: Column(
+                            children: [
+                              IconButton(
+                                color: Colors.white,
+                                onPressed: _toggleSelfieMode,
+                                icon: const Icon(
+                                  Icons.cameraswitch,
+                                ),
                               ),
-                            ),
-                            for (var flashButton in flashButtons)
-                              Row(
-                                children: [
-                                  Gaps.v10,
-                                  VideoFlashControl(
-                                    videoFlashMode: _flashMode,
-                                    setFlashMode: _setFlashMode,
-                                    receivedFlashSetting:
-                                        flashButton["flashMode"],
-                                    receivedIcon: flashButton["icon"],
-                                  ),
-                                ],
-                              ),
-                          ],
+                              for (var flashButton in flashButtons)
+                                Row(
+                                  children: [
+                                    Gaps.v10,
+                                    VideoFlashControl(
+                                      videoFlashMode: _flashMode,
+                                      setFlashMode: _setFlashMode,
+                                      receivedFlashSetting:
+                                          flashButton["flashMode"],
+                                      receivedIcon: flashButton["icon"],
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
                       Positioned(
                         bottom: Sizes.size40,
                         width: MediaQuery.of(context).size.width,
