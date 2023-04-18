@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_botton.dart';
 import 'package:tiktok_clone/utils.dart';
 
@@ -20,12 +20,13 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.push(
+      context,
       PageRouteBuilder(
         reverseTransitionDuration: const Duration(seconds: 1),
         transitionDuration: const Duration(seconds: 1),
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const UsernameScreen(),
+            const LoginFormScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final offsetAnimation = Tween(
             begin: const Offset(0, -1),
