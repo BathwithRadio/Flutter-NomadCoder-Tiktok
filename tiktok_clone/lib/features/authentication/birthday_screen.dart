@@ -38,7 +38,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   // inside of state, you can receive context when, whereever
   void _onNextTap() {
     //
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime initialDate) {

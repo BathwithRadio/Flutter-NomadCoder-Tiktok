@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/common/widgets/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 final tabs = ['Top', 'Users', 'Videos', 'Sounds', 'LIVE', 'Shopping', 'Brands'];
@@ -45,16 +44,16 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     });
   }
 
-  void _onBackToMain() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const MainNavigatoinScreen(),
-      ),
-      (route) {
-        return false;
-      },
-    );
-  }
+  // void _onBackToMain() {
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //     MaterialPageRoute(
+  //       builder: (context) => MainNavigatoinScreen(),
+  //     ),
+  //     (route) {
+  //       return false;
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {
@@ -89,7 +88,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: _onBackToMain,
+                      // onTap: _onBackToMain,
                       child: const FaIcon(
                         FontAwesomeIcons.angleLeft,
                         color: Colors.black,
