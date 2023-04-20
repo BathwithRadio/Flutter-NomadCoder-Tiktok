@@ -179,12 +179,15 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     // Video Preview로 이동한 후에 이 화면에서 사용한 리소스를 계속 사용하고 싶지 않으므로
     _progressAnimationController.dispose();
     _buttonAnimationController.dispose();
-    _cameraController.dispose();
+    if (!_noCamera) {
+      _cameraController.dispose();
+    }
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_noCamera) return;
     if (!_hasPermission) return;
     if (!_cameraController.value.isInitialized) return;
 
@@ -254,6 +257,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       if (!_noCamera && _cameraController.value.isInitialized)
                         if (!_prepareDispose) CameraPreview(_cameraController),
                       // FlashMode는 late 이기 때문에 초기화 하지 않으면 안됨 => 숨겨줌
+                      const Positioned(
+                        top: Sizes.size40,
+                        left: Sizes.size20,
+                        child: CloseButton(
+                          color: Colors.white,
+                        ),
+                      ),
                       if (!_noCamera)
                         Positioned(
                           top: Sizes.size40,
