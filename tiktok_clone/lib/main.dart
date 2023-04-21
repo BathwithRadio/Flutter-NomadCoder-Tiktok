@@ -106,6 +106,8 @@ class TikTokApp extends StatelessWidget {
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade900,
         ),
+        //해당 위젯은 위젯 트리 맨 위에서 정의된 값도 어디에서든 가져다 사용할 수 있다
+        //이것이 아니라면 모든 위젯에 GoRoute를 통해서 전달해야 한다.
         primaryColor: const Color(0xFFE9435A),
         brightness: Brightness.dark,
       ),
