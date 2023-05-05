@@ -25,6 +25,7 @@ class VideoConfigData extends InheritedWidget {
 }
 
 // setState를 부를 때마다 자신을 새로고침
+// autoMute 데이터와 rebuild를 작동시킬 메소드 toggleMuted 공유
 class VideoConfig extends StatefulWidget {
   final Widget child;
 
