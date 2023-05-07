@@ -35,6 +35,8 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isMuted = false;
 
+  bool _autoMute = videoConfig.value;
+
   final String _inputCaption = "This is Soondol!!! babababababababa so cute!!";
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
@@ -94,6 +96,12 @@ class _VideoPostState extends State<VideoPost>
     //   // 여기에 setState를 추가하면 매 변경마다 build를 강제로 호출할 수 있게 됨
     //   setState(() {});
     // });
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.value;
+      });
+    });
   }
 
   @override
@@ -220,12 +228,14 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                VideoConfigData.of(context).autoMute
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
+                _autoMute
+                    ? FontAwesomeIcons.volumeHigh
+                    : FontAwesomeIcons.volumeOff,
                 color: Colors.white,
               ),
-              onPressed: VideoConfigData.of(context).toggleMuted,
+              onPressed: () {
+                videoConfig.value = !videoConfig.value;
+              },
             ),
           ),
           Positioned(
