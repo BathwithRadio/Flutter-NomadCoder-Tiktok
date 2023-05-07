@@ -40,12 +40,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ChangeNotifier를 사용할 때 AnimatedBuilder를 사용
             // AnimatedBuilder는 애니매이션 뿐만 아니라 값 변경알림에도 사용됨
             // 이렇게 사용하면 딱 이 부분만 rebuild 된다 - 전체를 rebuild하지 않아도 됨
-            AnimatedBuilder(
-              animation: videoConfig,
-              builder: (context, child) => SwitchListTile.adaptive(
-                value: videoConfig.autoMute,
+            ValueListenableBuilder(
+              valueListenable: videoConfig,
+              builder: (context, value, child) => SwitchListTile.adaptive(
+                value: value,
                 onChanged: (value) {
-                  videoConfig.toggleAutoMute();
+                  videoConfig.value = !videoConfig.value;
                 },
                 title: Text(
                   "Auto Mute",

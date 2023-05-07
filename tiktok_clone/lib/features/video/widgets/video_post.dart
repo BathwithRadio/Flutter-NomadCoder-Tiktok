@@ -35,7 +35,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isMuted = false;
 
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   final String _inputCaption = "This is Soondol!!! babababababababa so cute!!";
 
@@ -99,7 +99,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -233,7 +233,9 @@ class _VideoPostState extends State<VideoPost>
                     : FontAwesomeIcons.volumeOff,
                 color: Colors.white,
               ),
-              onPressed: videoConfig.toggleAutoMute,
+              onPressed: () {
+                videoConfig.value = !videoConfig.value;
+              },
             ),
           ),
           Positioned(
